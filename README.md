@@ -125,7 +125,7 @@ $from_email = "noreply@yourdomain.com";
 
 ## Live Demo
 
-[Add your deployment URL here]
+https://sandobyeryne.com/
 
 ## Contact
 
