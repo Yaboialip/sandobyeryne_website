@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sando's by Eryne</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+        body {
+            font-family: 'Fredoka One', cursive;
+            background-image: url('images/pink_bg.png');
+            background-size: 300px 300px;
+            background-repeat: repeat;
+            background-color: rgba(255, 182, 193, 0.199);
+            background-blend-mode: lighten;
+            margin: 0;
+            padding: 0;
+            color: #ff4d88;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            text-align: center;
+            padding: 30px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .cart-icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-icon:hover {
+            background: white;
+            color: #ff4d88;
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            background: #ff4d88;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: white;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 30px;
+            box-shadow: 0 6px 12px rgba(255, 105, 180, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .product:hover {
+            animation: float 1.5s ease-in-out infinite;
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(255, 105, 180, 0.3);
+        }
+
+        /* Fixed image frame styling */
+        .product-image-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #f8f9fa;
+            border-bottom: 4px solid #ffb6c1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* Alternative: Fill frame completely (may crop) */
+        .product.fill-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Alternative: Fit with background color */
+        .product.fit-with-bg .product-image-container {
+            background: linear-gradient(45deg, #fff5f8, #ffe8f0);
+        }
+
+        .product h2 {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 15px 10px;
+        }
+
+        .heart {
+            position: fixed;
+            top: -20px;
+            font-size: 20px;
+            animation: fall linear forwards;
+            color: #ff4d88;
+            z-index: 0;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 10px;
+                position: relative;
+            }
+
+            .cart-icon {
+                position: static;
+                transform: none;
+                margin: 0 auto 15px auto;
+                display: flex;
+                justify-content: center;
+                width: fit-content;
+                font-size: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+                margin: 10px 0 5px 0;
+            }
+
+            header p {
+                font-size: 1rem;
+                margin: 5px 0;
+            }
+
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .product {
+                min-height: auto;
+            }
+
+            .product-image-container {
+                height: 180px;
+            }
+
+            .product h2 {
+                font-size: 1.1rem;
+                margin: 10px 8px;
+                line-height: 1.3;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 12px;
+                padding: 10px;
+            }
+
+            .product-image-container {
+                height: 150px;
+            }
+
+            .product h2 {
+                font-size: 1rem;
+            }
+        }
+
+        /* Add these to all pages for better mobile experience */
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea,
+        select {
+            font-size: 16px !important;
+        }
+
+        * {
+            -webkit-tap-highlight-color: rgba(255, 105, 180, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        @viewport {
+            width: device-width;
+            zoom: 1.0;
+        }
+
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            header {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .cart-icon,
+            .back-btn {
+                padding: 6px 12px !important;
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="cart-icon" onclick="goToCart()">
+            🛒 <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <h1>❤ Sando's by Eryne ❤</h1>
+        <p>Sweet & Fluffy Treats Just for You</p>
+    </header>
+    <main class="container">
+        <a href="product_detail_page.html?product=mix-sando" class="product">
+            <div class="product-image-container">
+                <img src="images/mix.png" alt="Mix Sando">
+            </div>
+            <h2>Mix Sando - Rp 50.000</h2>
+        </a>
+        <a href="product_detail_page.html?product=orange-sando" class="product">
+            <div class="product-image-container">
+                <img src="images/jeruk.png" alt="Orange Sando">
+            </div>
+            <h2>Orange Sando - Rp 45.000</h2>
+        </a>
+        <a href="product_detail_page.html?product=strawberry-sando" class="product">
+            <div class="product-image-container">
+                <img src="images/straw.png" alt="Strawberry Sando">
+            </div>
+            <h2>Strawberry Sando - Rp 45.000</h2>
+        </a>
+        <a href="product_detail_page.html?product=blueberry-sando" class="product">
+            <div class="product-image-container">
+                <img src="images/blueberry.png" alt="Blueberry Sando">
+            </div>
+            <h2>Blueberry Sando - Rp 45.000</h2>
+        </a>
+        <a href="product_detail_page.html?product=banana-sando" class="product">
+            <div class="product-image-container">
+                <img src="images/banana.png" alt="Banana Sando">
+            </div>
+            <h2>Banana Sando - Rp 45.000</h2>
+        </a>
+    </main>
+
+    <script>
+        // Data produk
+        const products = {
+            'mix-sando': {
+                name: 'Mix Sando',
+                price: 'Rp 50.000',
+                image: 'images/mix.png',
+                description: 'A colourful fruit sandwich featuring layers of fluffy milk bread, fresh seasonal fruits like strawberry and orange, all nestled in airy whipped cream for a vibrant, sweet, and refreshing treat.',
+                ingredients: ['Fluffy milk bread', 'Fresh strawberries', 'Fresh oranges', 'Whipped cream', 'Seasonal fruits'],
+                allergens: ['Gluten', 'Dairy']
+            },
+            'orange-sando': {
+                name: 'Orange Sando',
+                price: 'Rp 45.000',
+                image: 'images/jeruk.png',
+                description: 'Fresh, tangy orange segments wrapped in pillowy milk bread and light cream, delivering a refreshing citrus burst.',
+                ingredients: ['Fluffy milk bread', 'Fresh orange segments', 'Light whipped cream'],
+                allergens: ['Gluten', 'Dairy']
+            },
+            'strawberry-sando': {
+                name: 'Strawberry Sando',
+                price: 'Rp 45.000',
+                image: 'images/straw.png',
+                description: 'A Japanese-style sandwich made with fluffy milk bread, fresh sweet strawberries and lightly whipped cream, creating a soft, fruity, and creamy treat.',
+                ingredients: ['Japanese milk bread', 'Fresh strawberries', 'Lightly whipped cream'],
+                allergens: ['Gluten', 'Dairy']
+            },
+            'blueberry-sando': {
+                name: 'Blueberry Sando',
+                price: 'Rp 45.000',
+                image: 'images/blueberry.png',
+                description: 'A soft Japanese milk bread sandwich filled with plump, juicy blueberries and smooth whipped cream for a sweet-tart delight.',
+                ingredients: ['Japanese milk bread', 'Fresh blueberries', 'Smooth whipped cream'],
+                allergens: ['Gluten', 'Dairy']
+            },
+            'banana-sando': {
+                name: 'Banana Sando',
+                price: 'Rp 45.000',
+                image: 'images/banana.png',
+                description: 'Fluffy bread layered with ripe banana slices and creamy whipped filling, offering a naturally sweet and comforting taste.',
+                ingredients: ['Fluffy bread', 'Ripe banana slices', 'Creamy whipped filling'],
+                allergens: ['Gluten', 'Dairy']
+            }
+        };
+
+        function goToProductDetail(productId) {
+            // Note: In actual implementation, you'd need to use a different storage method
+            // as localStorage is not supported in Claude artifacts
+            // This is just for demonstration
+            window.location.href = 'product_detail_page.html';
+        }
+
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Update cart count ketika halaman dimuat
+        window.addEventListener('DOMContentLoaded', updateCartCount);
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 800);
+    </script>
+</body>
+
+</html>
